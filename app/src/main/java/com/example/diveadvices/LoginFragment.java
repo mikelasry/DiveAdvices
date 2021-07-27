@@ -3,6 +3,7 @@ package com.example.diveadvices;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
@@ -38,28 +39,36 @@ public class LoginFragment extends Fragment {
         this.submitBtn = view.findViewById(R.id.login_submit_btn);
         this.backBtn = view.findViewById(R.id.login_back_btn);
 
-        this.submitBtn.setOnClickListener((v) -> submit());
+        this.submitBtn.setOnClickListener((v) -> submit(view));
         this.backBtn.setOnClickListener((v) -> Navigation.findNavController(view).navigateUp());
 
         return view;
     }
 
-    private void submit() {
-        this.submitBtn.setEnabled(false);
-        if(this.passwordEt.getText().toString().isEmpty() ||
-            this.emailEt.getText().toString().isEmpty())
-            Toast.makeText(getContext(), "All credentials must be supplied!",Toast.LENGTH_LONG).show();
+    private void submit(View view) {
 
-        Model.instance.login(this.emailEt.getText().toString(),
-                this.passwordEt.getText().toString(),
-                (success)->{
-            this.submitBtn.setEnabled(true);
-              if(success){
-                Toast.makeText(getContext(), "Success!", Toast.LENGTH_LONG);
-              }else {
-                Toast.makeText(getContext(), "Please try again!", Toast.LENGTH_LONG);
-              }
-         });
+        NavDirections actionToMenu = LoginFragmentDirections.actionGlobalMenuFragment();
+        Navigation.findNavController(view).navigate(actionToMenu);
+        return;
+
+//        this.submitBtn.setEnabled(false);
+//        if(this.passwordEt.getText().toString().isEmpty() ||
+//            this.emailEt.getText().toString().isEmpty())
+//            Toast.makeText(getContext(), "All credentials must be supplied!",Toast.LENGTH_LONG).show();
+//
+//        Model.instance.login(this.emailEt.getText().toString(),
+//                this.passwordEt.getText().toString(),
+//                (success)->{
+//                    this.submitBtn.setEnabled(true);
+//                    if(success){
+//                        NavDirections actionToMenu = LoginFragmentDirections.actionGlobalMenuFragment();
+//                        Navigation.findNavController(view).navigate(actionToMenu);
+//                        Toast.makeText(getContext(), "Success!", Toast.LENGTH_LONG);
+//                    }else {
+//                        Toast.makeText(getContext(), "Please try again!", Toast.LENGTH_LONG);
+//                    }
+//                }
+//        );
     }
 
     private void resetCreds(){
