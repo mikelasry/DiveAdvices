@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "969320929243",
+    "project_id": "diveadvicefb",
+    "storage_bucket": "diveadvicefb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:969320929243:android:71d6e822d011c97e3439fe",
+        "android_client_info": {
+          "package_name": "com.example.diveadvices"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "969320929243-pu285cmorehuqssn5u8iee3vabg730d1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDIdgiGLuQDP0gKMTfYhmetZahRDIfYCms"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "969320929243-pu285cmorehuqssn5u8iee3vabg730d1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
