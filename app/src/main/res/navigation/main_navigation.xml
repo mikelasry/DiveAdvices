@@ -31,4 +31,24 @@
             android:id="@+id/action_signupFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/sitesListFragment"
+        android:name="com.example.diveadvices.SitesListFragment"
+        android:label="fragment_sites_list"
+        tools:layout="@layout/fragment_sites_list" />
+    <fragment
+        android:id="@+id/siteInfoFragment"
+        android:name="com.example.diveadvices.SiteInfoFragment"
+        android:label="fragment_site_info"
+        tools:layout="@layout/fragment_site_info" />
+    <fragment
+        android:id="@+id/menuFragment"
+        android:name="com.example.diveadvices.MenuFragment"
+        android:label="fragment_menu"
+        tools:layout="@layout/fragment_menu" >
+        <action
+            android:id="@+id/action_menuFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+    <action android:id="@+id/action_global_menuFragment" app:destination="@id/menuFragment" />
 </navigation>

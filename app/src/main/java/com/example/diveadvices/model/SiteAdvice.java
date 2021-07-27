@@ -4,8 +4,7 @@ public class SiteAdvice {
     private String name;
     private String country;
     private String description;
-
-
+    private String imgUrl;
 
     private int minDepth;
     private int maxDepth;
@@ -53,4 +52,8 @@ public class SiteAdvice {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public String getImgUrl() {return imgUrl;}
+
+    public void setImgUrl(String imgUrl) {this.imgUrl = imgUrl;}
 }
