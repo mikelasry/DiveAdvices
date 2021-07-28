@@ -1,5 +1,7 @@
 package com.example.diveadvices.model;
 
+import android.graphics.Bitmap;
+
 import androidx.lifecycle.MutableLiveData;
 
 import java.util.concurrent.ExecutorService;
@@ -19,7 +21,7 @@ public class Model {
     public enum LoadingState {loading,loaded,error}
 
     public interface OnCompleteListener{
-        void onComplete(boolean success, String msg);
+        void onComplete(boolean success);
     }
 
     public interface GetUserListener{
@@ -55,9 +57,17 @@ public class Model {
 
 
 
+    // ------------------------------------------------ Dive Advice CRUD ---------------------------------------------------------
+
+    public void uploadImage(Bitmap bmImg, String name, final Model.UploadImageListener listener){
+        ModelFirebase.uploadImage(bmImg, name, listener);
+    }
 
 
-
+    public void saveAdvice(SiteAdvice advice){
+        // Set Live Data Loading state
+//        ModelFirebase.
+    }
 
 
 

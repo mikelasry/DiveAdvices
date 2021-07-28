@@ -58,8 +58,8 @@ public class SignupFragment extends Fragment {
             Model.instance.addUser(
                     new User(this.nameEt.getText().toString(), this.emailEt.getText().toString())
                     ,this.passwordEt.getText().toString(),
-                    (success, msg) -> {
-                        Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
+                    (success) -> {
+                        Toast.makeText(getContext(), "success", Toast.LENGTH_SHORT).show();
                         if(success){
                             Navigation.findNavController(view).navigate(R.id.action_signupFragment_to_loginFragment);
                         } this.submitBtn.setEnabled(true);

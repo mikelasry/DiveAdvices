@@ -6,6 +6,7 @@ public class SiteAdvice {
     private String country;
     private String description;
     private String imgUrl;
+    private String owner;
 
     private Long lastUpdated;
 
@@ -71,4 +72,8 @@ public class SiteAdvice {
     public Long getLastUpdated() { return lastUpdated; }
 
     public void setLastUpdated(Long lastUpdated) { this.lastUpdated = lastUpdated;}
+
+    public String getOwner() { return owner; }
+
+    public void setOwner(String owner) { this.owner = owner; }
 }

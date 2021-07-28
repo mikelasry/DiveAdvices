@@ -11,11 +11,12 @@
         android:id="@+id/post_addimg_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
+        android:layout_marginStart="44dp"
         android:text="Add an image"
         app:layout_constraintBottom_toBottomOf="@+id/post_img_iv"
         app:layout_constraintStart_toEndOf="@+id/post_img_iv"
-        app:layout_constraintTop_toTopOf="@+id/post_img_iv" />
+        app:layout_constraintTop_toTopOf="@+id/post_img_iv"
+        app:layout_constraintVertical_bias="0.111" />
 
     <ImageView
         android:id="@+id/imageView6"
@@ -84,8 +85,9 @@
 
     <ImageView
         android:id="@+id/post_img_iv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+
         android:layout_marginStart="37dp"
         android:layout_marginTop="8dp"
         android:src="@drawable/ic_launcher_foreground"
@@ -98,7 +100,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="8dp"
         android:text="post"
         app:backgroundTint="@color/teal_700"
         app:cornerRadius="100px"
@@ -112,10 +114,40 @@
         android:id="@+id/post_back_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="29dp"
+        android:layout_marginBottom="8dp"
         android:text="back"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/editTextTextPersonName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        android:ems="10"
+        android:hint="Min Depth"
+        android:inputType="textPersonName"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName2" />
+
+    <EditText
+        android:id="@+id/editTextTextPersonName2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="17dp"
+        android:layout_marginEnd="32dp"
+        android:ems="10"
+        android:hint="Max Depth"
+        android:inputType="textPersonName"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/post_addimg_btn" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
