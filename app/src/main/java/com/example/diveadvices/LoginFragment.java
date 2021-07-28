@@ -49,28 +49,33 @@ public class LoginFragment extends Fragment {
 
     private void submit(View view) {
 
-        NavDirections actionToMenu = LoginFragmentDirections.actionGlobalMenuFragment();
-        Navigation.findNavController(view).navigate(actionToMenu);
-        return;
+//        NavDirections actionToMenu = LoginFragmentDirections.actionGlobalMenuFragment();
+//        Navigation.findNavController(view).navigate(actionToMenu);
+//        return;
 
-//        this.submitBtn.setEnabled(false);
-//        if(this.passwordEt.getText().toString().isEmpty() ||
-//            this.emailEt.getText().toString().isEmpty())
-//            Toast.makeText(getContext(), "All credentials must be supplied!",Toast.LENGTH_LONG).show();
-//
-//        Model.instance.login(this.emailEt.getText().toString(),
-//                this.passwordEt.getText().toString(),
-//                (success)->{
-//                    this.submitBtn.setEnabled(true);
-//                    if(success){
-//                        NavDirections actionToMenu = LoginFragmentDirections.actionGlobalMenuFragment();
-//                        Navigation.findNavController(view).navigate(actionToMenu);
-//                        Toast.makeText(getContext(), "Success!", Toast.LENGTH_LONG);
-//                    }else {
-//                        Toast.makeText(getContext(), "Please try again!", Toast.LENGTH_LONG);
-//                    }
-//                }
-//        );
+        this.submitBtn.setEnabled(false);
+
+        if(this.passwordEt.getText().toString().isEmpty() ||
+            this.emailEt.getText().toString().isEmpty()) {
+            Toast.makeText(getContext(), "All credentials must be supplied!", Toast.LENGTH_LONG).show();
+            this.submitBtn.setEnabled(true);
+            return;
+        }
+
+        Model.instance.login(this.emailEt.getText().toString(),
+                this.passwordEt.getText().toString(),
+                (success)->{
+                    if(success){
+//                        Toast.makeText(getContext(), "Welcome!", Toast.LENGTH_LONG);
+                        NavDirections actionToMenu = LoginFragmentDirections.actionGlobalMenuFragment();
+                        Navigation.findNavController(view).navigate(actionToMenu);
+                    }else {
+                        Toast.makeText(getContext(), "Please try again!", Toast.LENGTH_LONG).show();
+                        this.passwordEt.setText("");
+                        this.submitBtn.setEnabled(true);
+                    }
+                }
+        );
     }
 
     private void resetCreds(){

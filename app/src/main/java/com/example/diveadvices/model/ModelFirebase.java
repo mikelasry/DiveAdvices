@@ -9,6 +9,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -52,8 +53,15 @@ public class ModelFirebase {
             });
     }
 
-    public static void login(String id, String pw, final Model.LoginListener listener){
+    public static void login(String email, String pw, final Model.LoginListener listener){
+        getAuthManager().signInWithEmailAndPassword(email, pw)
+                .addOnCompleteListener( task -> {
+                    if (task.isSuccessful())
+                        listener.onComplete(true);
+                    else
+                        listener.onComplete(false);
 
+                });
     }
 
     public static void logout(String id) {
@@ -75,4 +83,28 @@ public class ModelFirebase {
      public void saveSite(SiteAdvice divindSiteAdvice){
 
      }
+
+     // ------------------------------------------------------------------------------------------------
+     // ---------------------             Assistance Functions             ------------------------------
+     // ------------------------------------------------------------------------------------------------
+
+    private static FirebaseAuth getAuthManager(){
+        return FirebaseAuth.getInstance();
+    }
+
+    private static FirebaseUser getCurrentUser(){
+        return getAuthManager().getCurrentUser();
+    }
+
+    private static FirebaseFirestore getFirestore(){
+        return FirebaseFirestore.getInstance();
+    }
+
+
+
+
+
+
+
+    // ------------------------------------------------------------------------------------------------
 }

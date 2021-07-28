@@ -38,9 +38,7 @@ public class SiteInfoFragment extends Fragment {
         this.maxDepthTv = view.findViewById(R.id.sinfo_maxdepth_tv);
         this.doneBtn = view.findViewById(R.id.sinfo_done_btn);
 
-
         this.doneBtn.setOnClickListener((v) -> Navigation.findNavController(view).navigateUp());
-
 
         return view;
     }

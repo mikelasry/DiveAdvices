@@ -9,11 +9,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.diveadvices.model.Model;
 
 public class MenuFragment extends Fragment {
+
+    private TextView welcomeTv;
 
     private Button findBtn;
     private Button postBtn;
@@ -29,13 +32,14 @@ public class MenuFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_menu, container, false);
+        this.welcomeTv = view.findViewById(R.id.menu_header_tv);
         this.findBtn = view.findViewById(R.id.menu_feed_btn);
         this.postBtn = view.findViewById(R.id.menu_post_btn);
         this.profileBtn = view.findViewById(R.id.menu_profile_btn);
         this.logoutBtn = view.findViewById(R.id.menu_logout_btn);
 
         this.findBtn.setOnClickListener((v)->{
-            // Navigate (not global) to recycler view
+            Navigation.findNavController(view).navigate(R.id.action_menuFragment_to_sitesListFragment);
         });
 
         this.postBtn.setOnClickListener((v)->{
