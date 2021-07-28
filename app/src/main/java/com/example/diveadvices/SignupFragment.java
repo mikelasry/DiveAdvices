@@ -62,7 +62,7 @@ public class SignupFragment extends Fragment {
                         Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
                         if(success){
                             Navigation.findNavController(view).navigate(R.id.action_signupFragment_to_loginFragment);
-                        }
+                        } this.submitBtn.setEnabled(true);
                     });
         }
 

@@ -21,7 +21,7 @@ public class PostFragment extends Fragment {
     private ImageView imgIv;
 
     private Button addImgBtn;
-    private Button postBtn;
+    private Button submitBtn;
     private Button backBtn;
 
 
@@ -35,13 +35,13 @@ public class PostFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_post, container, false);
 
-        EditText nameEt = view.findViewById(R.id.post_name_et);
-        EditText countryEt = view.findViewById(R.id.post_country_et);
-        EditText descEt = view.findViewById(R.id.post_desc_et);
-        ImageView imgIv = view.findViewById(R.id.post_img_iv);
-        Button addImgBtn = view.findViewById(R.id.post_addimg_btn);
-        Button postBtn = view.findViewById(R.id.post_submit_btn);
-        Button backBtn = view.findViewById(R.id.post_back_btn);
+        this.nameEt = view.findViewById(R.id.post_name_et);
+        this.countryEt = view.findViewById(R.id.post_country_et);
+        this.descEt = view.findViewById(R.id.post_desc_et);
+        this.imgIv = view.findViewById(R.id.post_img_iv);
+        this.addImgBtn = view.findViewById(R.id.post_addimg_btn);
+        this.submitBtn = view.findViewById(R.id.post_submit_btn);
+        this.backBtn = view.findViewById(R.id.post_back_btn);
 
         this.addImgBtn.setOnClickListener((v) -> {
             /**
@@ -49,14 +49,12 @@ public class PostFragment extends Fragment {
              */
         });
 
-        this.postBtn.setOnClickListener((v) -> {
-            this.nameEt.getText().toString();
-            this.countryEt.getText().toString();
-            this.descEt.getText().toString();
+        this.submitBtn.setOnClickListener((v) -> {
+//            this.nameEt.getText().toString();
+//            this.countryEt.getText().toString();
+//            this.descEt.getText().toString();
 
-            /**
-             * post...
-             */
+            this.post();
         });
 
         this.backBtn.setOnClickListener((v) -> {
@@ -67,5 +65,9 @@ public class PostFragment extends Fragment {
         return view;
     }
 
-    private void post(){}
+    private void post(){
+        /**
+         * implement
+         */
+    }
 }

@@ -7,11 +7,16 @@ public class SiteAdvice {
     private String description;
     private String imgUrl;
 
+    private Long lastUpdated;
+
     private int minDepth;
     private int maxDepth;
 
     public SiteAdvice(String name) {
-        this.name = name;
+        this.setName(name);
+        this.setLastUpdated(System.currentTimeMillis());
+        this.setMinDepth(0);
+        this.setMaxDepth(18);
     }
 
     public String getName() {
@@ -34,16 +39,21 @@ public class SiteAdvice {
         return minDepth;
     }
 
-    public void setMinDepth(int minDepth) {
+    public boolean setMinDepth(int minDepth) {
+        if(minDepth<1 || minDepth>100)
+            return false;
         this.minDepth = minDepth;
+        return true;
     }
 
     public int getMaxDepth() {
         return maxDepth;
     }
 
-    public void setMaxDepth(int maxDepth) {
+    public boolean setMaxDepth(int maxDepth) {
+        if(maxDepth>100 || maxDepth<1) return false;
         this.maxDepth = maxDepth;
+        return true;
     }
 
     public String getDescription() {
@@ -57,4 +67,8 @@ public class SiteAdvice {
     public String getImgUrl() {return imgUrl;}
 
     public void setImgUrl(String imgUrl) {this.imgUrl = imgUrl;}
+
+    public Long getLastUpdated() { return lastUpdated; }
+
+    public void setLastUpdated(Long lastUpdated) { this.lastUpdated = lastUpdated;}
 }
