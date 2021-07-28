@@ -34,7 +34,7 @@
         app:strokeWidth="5px" />
 
     <Button
-        android:id="@+id/nebu_post_btn"
+        android:id="@+id/menu_post_btn"
         android:layout_width="140dp"
         android:layout_height="146dp"
         android:layout_marginTop="217dp"

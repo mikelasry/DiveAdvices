@@ -19,6 +19,7 @@
         android:id="@+id/sites_list_recycler"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:background="@drawable/grad_cyan_violet"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/site_load_pb"
         tools:layout_editor_absoluteX="-16dp" />

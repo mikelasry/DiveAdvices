@@ -56,8 +56,9 @@ public class ModelFirebase {
 
     }
 
-
-
+    public static void logout(String id) {
+//        FirebaseAuth.getInstance().signOut(); // what about the id?
+    }
 
 
     // -------------------------------- Diving Sites CRUD ---------------------------------------------

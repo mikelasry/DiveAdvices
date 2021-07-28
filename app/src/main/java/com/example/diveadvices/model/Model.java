@@ -49,6 +49,9 @@ public class Model {
         ModelFirebase.login(id, pw, listener);
     }
 
+    public void logout(String id){
+        ModelFirebase.logout(id);
+    }
 
 
 
