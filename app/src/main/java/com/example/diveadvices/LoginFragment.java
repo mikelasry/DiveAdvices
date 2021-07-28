@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,13 +33,14 @@ public class LoginFragment extends Fragment {
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_login, container, false);
-
+//
         this.emailEt = view.findViewById(R.id.login_email_et);
         this.passwordEt = view.findViewById(R.id.login_password_et);
 
         this.submitBtn = view.findViewById(R.id.login_submit_btn);
+        for (int i=0; i<10 ;i++) Log.d("TAG","@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ "+ (this.submitBtn==null));
         this.backBtn = view.findViewById(R.id.login_back_btn);
-
+//
         this.submitBtn.setOnClickListener((v) -> submit(view));
         this.backBtn.setOnClickListener((v) -> Navigation.findNavController(view).navigateUp());
 

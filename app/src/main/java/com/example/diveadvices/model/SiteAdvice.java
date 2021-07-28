@@ -1,6 +1,7 @@
 package com.example.diveadvices.model;
 
 public class SiteAdvice {
+
     private String name;
     private String country;
     private String description;
