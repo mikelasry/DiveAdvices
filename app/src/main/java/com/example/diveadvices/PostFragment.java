@@ -204,21 +204,21 @@ public class PostFragment extends Fragment {
         String country = this.countryEt.getText().toString().trim();
         String desc = this.descEt.getText().toString().trim();
         String minDepth = this.minDepthEt.getText().toString().trim();
-        String maxDepth = this.minDepthEt.getText().toString().trim();
+        String maxDepth = this.maxDepthEt.getText().toString().trim();
         String photoUrl = (url == null) ? "" : url;
         String id = "" + System.currentTimeMillis();
 
+
         SiteAdvice sa = new SiteAdvice(id, name, country, desc, photoUrl, "", minDepth, maxDepth); // owner: Model.instance.getCurrentUser().getEmail() implemented on firebase level
         Model.instance.saveAdvice(sa, (success)->{
-            toast((success?"": "Failed. Please try again"), LONG);
+
             if(success){
-//                Model.instance.getAllSiteAdvices();
                 Navigation.findNavController(view).navigate(R.id.action_postFragment_to_sitesListFragment);
             } else{
                 toast("Please  try again", LONG);
+            }
                 this.submitBtn.setEnabled(true);
                 this.addImgBtn.setEnabled(true);
-            }
         });
 
     }

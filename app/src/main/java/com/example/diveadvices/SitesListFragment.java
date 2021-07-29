@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -30,7 +31,7 @@ public class SitesListFragment extends Fragment {
     LiveData<List<SiteAdvice>> sitesAdvicesList;
     private ProgressBar progressBar;
     private SitesListViewModel viewModel;
-
+    private Button toMenuBtn;
 
     public SitesListFragment() {
         // Required empty public constructor
@@ -53,8 +54,14 @@ public class SitesListFragment extends Fragment {
         SitesAdapter adapter = new SitesAdapter();
         recyclerView.setAdapter(adapter);
 
+        this.toMenuBtn = view.findViewById(R.id.list_menu_btn);
         this.progressBar = view.findViewById(R.id.site_load_pb);
         this.progressBar.setVisibility(View.GONE);
+        this.sitesAdvicesList = viewModel.getData();
+
+        toMenuBtn.setOnClickListener((v)->{
+            Navigation.findNavController(view).navigate(R.id.action_global_menuFragment);
+        });
 
         adapter.setOnItemClickListener((int position) -> {
             SitesListFragmentDirections.ActionSitesListFragmentToSiteInfoFragment actionToSinfo = SitesListFragmentDirections.actionSitesListFragmentToSiteInfoFragment(this.sitesAdvicesList.getValue().get(position));

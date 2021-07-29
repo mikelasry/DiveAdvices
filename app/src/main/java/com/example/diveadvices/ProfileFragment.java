@@ -31,7 +31,7 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
-        this.nameTv = view.findViewById(R.id.profile_name_tv);
+//        this.nameTv = view.findViewById(R.id.profile_name_tv);
         this.emailTv = view.findViewById(R.id.profile_email_tv);
 
         this.myPostsBtn = view.findViewById(R.id.profile_my_posts_btn);
@@ -39,7 +39,7 @@ public class ProfileFragment extends Fragment {
 
         String name = Model.instance.getCurrentUser().getDisplayName();
         String email = Model.instance.getCurrentUser().getEmail();
-        this.nameTv.setText(name);
+//        this.nameTv.setText(name);
         this.emailTv.setText(email);
 
         this.backBtn.setOnClickListener((v) -> {

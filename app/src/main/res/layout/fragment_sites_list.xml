@@ -20,8 +20,18 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@drawable/grad_cyan_violet"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/list_menu_btn"
         app:layout_constraintTop_toBottomOf="@+id/site_load_pb"
         tools:layout_editor_absoluteX="-16dp" />
+
+    <Button
+        android:id="@+id/list_menu_btn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="GO TO MENU"
+        app:backgroundTint="@color/browser_actions_text_color"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

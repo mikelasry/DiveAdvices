@@ -108,7 +108,7 @@ public class SiteAdvice implements Serializable {
         json.put("owner",this.owner);
         json.put("id",this.id);
         json.put("minDepth",this.minDepth);
-        json.put("mשסDepth",this.maxDepth);
+        json.put("maxDepth",this.maxDepth);
         return json;
     }
 
