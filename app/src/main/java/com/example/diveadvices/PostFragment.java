@@ -1,7 +1,6 @@
 package com.example.diveadvices;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,7 +13,6 @@ import android.os.Build;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
-import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
@@ -23,7 +21,6 @@ import static android.app.Activity.RESULT_OK;
 import static androidx.core.content.ContextCompat.checkSelfPermission;
 
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,16 +33,13 @@ import com.example.diveadvices.model.Model;
 import com.example.diveadvices.model.MyApplication;
 import com.example.diveadvices.model.SiteAdvice;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-import java.util.LinkedList;
-
 public class PostFragment extends Fragment {
 
     private EditText nameEt;
     private EditText countryEt;
     private EditText descEt;
+    private EditText minDepthEt;
+    private EditText maxDepthEt;
 
     private ImageView imgIv;
 
@@ -53,7 +47,7 @@ public class PostFragment extends Fragment {
     private Button submitBtn;
     private Button backBtn;
 
-    Bitmap imageBitmap;
+    private Bitmap imageBitmap;
 
 
     static final int CAMERA_REQUEST_CODE = 0;
@@ -61,7 +55,7 @@ public class PostFragment extends Fragment {
     static final int PERMISSIONS_REQUEST_CODE = 2;
     static final int SHORT = 3;
     static final int LONG = 4;
-
+    public View view;
     private final String CAMERA = "Camera";
     private final String GALLERY = "Gallery";
     private final String CANCEL = "Cancel";
@@ -75,11 +69,13 @@ public class PostFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_post, container, false);
+        this.view = inflater.inflate(R.layout.fragment_post, container, false);
 
         this.nameEt = view.findViewById(R.id.post_name_et);
         this.countryEt = view.findViewById(R.id.post_country_et);
         this.descEt = view.findViewById(R.id.post_desc_et);
+        this.minDepthEt = view.findViewById(R.id.post_mindepth_et);
+        this.maxDepthEt = view.findViewById(R.id.post_maxdepth_et);
         this.imgIv = view.findViewById(R.id.post_img_iv);
         this.addImgBtn = view.findViewById(R.id.post_addimg_btn);
         this.submitBtn = view.findViewById(R.id.post_submit_btn);
@@ -90,15 +86,19 @@ public class PostFragment extends Fragment {
         });
 
         this.submitBtn.setOnClickListener((v) -> {
+            this.submitBtn.setEnabled(false);
+
             String name = this.nameEt.getText().toString().trim();
             String country = this.countryEt.getText().toString().trim();
             String desc = this.descEt.getText().toString().trim();
+            String minDepth = this.minDepthEt.getText().toString().trim();
+            String maxDepth = this.maxDepthEt.getText().toString().trim();
 
-            if(name.isEmpty() || country.isEmpty() || desc.isEmpty() || imageBitmap == null){
+            if (name.isEmpty() || country.isEmpty() || desc.isEmpty() ||
+                    imageBitmap == null || minDepth.isEmpty() || maxDepth.isEmpty()) {
                 toast("Must supply all fields", LONG);
                 return;
             }
-
             this.post();
         });
 
@@ -108,7 +108,7 @@ public class PostFragment extends Fragment {
 
         return view;
     }
-    
+
     private void openImgDialog() {
         final CharSequence[] options = {CAMERA, GALLERY, CANCEL};
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -118,16 +118,15 @@ public class PostFragment extends Fragment {
             if (options[item].equals(CAMERA)) {
                 Intent takePicture = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(takePicture, CAMERA_REQUEST_CODE);
-            }
-            else if (options[item].equals(GALLERY)) {
+            } else if (options[item].equals(GALLERY)) {
                 Context context = MyApplication.context;
                 String requiredPermissions = Manifest.permission.READ_EXTERNAL_STORAGE;
                 int permissionResult = checkSelfPermission(context, requiredPermissions);
 
                 boolean currVersionMatch = Build.VERSION.SDK_INT == Build.VERSION_CODES.M;
-                boolean premissionGranted =  (permissionResult == PackageManager.PERMISSION_DENIED);
+                boolean premissionGranted = (permissionResult == PackageManager.PERMISSION_DENIED);
 
-                if (currVersionMatch && premissionGranted){
+                if (currVersionMatch && premissionGranted) {
                     String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE};
                     requestPermissions(permissions, PERMISSIONS_REQUEST_CODE);
                 } else {
@@ -144,7 +143,7 @@ public class PostFragment extends Fragment {
     public void onActivityResult(int reqCode, int resultCode, Intent data) {
         super.onActivityResult(reqCode, resultCode, data);
 
-        if(resultCode != RESULT_CANCELED) {
+        if (resultCode != RESULT_CANCELED) {
 
             switch (reqCode) {
 
@@ -152,11 +151,12 @@ public class PostFragment extends Fragment {
                     if (resultCode == RESULT_OK && data != null) {
                         imageBitmap = (Bitmap) data.getExtras().get("data");
                         imgIv.setImageBitmap(imageBitmap);
-                    } break;
+                    }
+                    break;
 
                 case GALLERY_REQUEST_CODE:
                     if (resultCode == RESULT_OK && data != null) {
-                        Uri selectedImage =  data.getData();
+                        Uri selectedImage = data.getData();
                         String[] filePathColumn = {MediaStore.Images.Media.DATA};
                         if (selectedImage != null) {
                             Cursor cursor = getActivity().getContentResolver().query(selectedImage,
@@ -175,47 +175,55 @@ public class PostFragment extends Fragment {
                                 cursor.close();
                             }
                         }
-                    } break;
+                    }
+                    break;
 
-                default: break;
+                default:
+                    break;
             }
         }
     }
 
     private void post() {
-        this.submitBtn.setEnabled(false);
-        this.addImgBtn.setEnabled(false);
-        Model.instance.uploadImage(imageBitmap, nameEt.getText().toString().trim(), (url) -> {
-            this.saveAsdvice(url);
-        });
+        //pb.setVisibility(View.VISIBLE);
+        submitBtn.setEnabled(false);
+        addImgBtn.setEnabled(false);
+
+        if (imageBitmap != null) {
+            Model.instance.uploadImage(imageBitmap, nameEt.getText().toString(), (url) -> {
+                saveAsdvice(url);
+            });
+        } else {
+            saveAsdvice(null);
+        }
+
     }
 
     private void saveAsdvice(String url) {
         String name = this.nameEt.getText().toString().trim();
         String country = this.countryEt.getText().toString().trim();
         String desc = this.descEt.getText().toString().trim();
+        String minDepth = this.minDepthEt.getText().toString().trim();
+        String maxDepth = this.minDepthEt.getText().toString().trim();
+        String photoUrl = (url == null) ? "" : url;
+        String id = "" + System.currentTimeMillis();
 
-        String photoUrl;
-
-        if (url == null) photoUrl = "";
-        else photoUrl = url;
-
-//        SiteAdvice sa = new SiteAdvice(name, desc ,"", photoUrl);
-
-//        Model.instance.saveAdvice(sa, (success)->{
-//            if(success){
-//                //TODO TOAST and log
-//                Navigation.findNavController(view).navigate(R.id.action_createAlbumFragment_to_feedFragment);
-//            }
-//            else{
-//                //TODO TOAST and log
-//            }
-//
-//        });
+        SiteAdvice sa = new SiteAdvice(id, name, country, desc, photoUrl, "", minDepth, maxDepth); // owner: Model.instance.getCurrentUser().getEmail() implemented on firebase level
+        Model.instance.saveAdvice(sa, (success)->{
+            toast((success?"": "Failed. Please try again"), LONG);
+            if(success){
+//                Model.instance.getAllSiteAdvices();
+                Navigation.findNavController(view).navigate(R.id.action_postFragment_to_sitesListFragment);
+            } else{
+                toast("Please  try again", LONG);
+                this.submitBtn.setEnabled(true);
+                this.addImgBtn.setEnabled(true);
+            }
+        });
 
     }
 
     private void toast(String msg, int dur) {
-        Toast.makeText(getContext(), msg, (dur==LONG?Toast.LENGTH_LONG:Toast.LENGTH_SHORT)).show();
+        Toast.makeText(getContext(), msg, (dur == LONG ? Toast.LENGTH_LONG : Toast.LENGTH_SHORT)).show();
     }
 }
