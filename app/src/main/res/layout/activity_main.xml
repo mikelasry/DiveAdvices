@@ -17,6 +17,7 @@
         app:navGraph="@navigation/main_navigation"
         tools:layout_editor_absoluteX="0dp" />
 
+
     <!--    add app:menu="@menu/menu_main" to bottom navigation-->
 
 

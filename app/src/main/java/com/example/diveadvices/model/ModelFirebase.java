@@ -5,16 +5,21 @@ import android.net.Uri;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.MutableLiveData;
 
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 
 import java.io.ByteArrayOutputStream;
+import java.util.LinkedList;
 import java.util.List;
 
 public class ModelFirebase {
@@ -71,32 +76,40 @@ public class ModelFirebase {
     }
 
 
-
-
     // -------------------------------- Diving Sites CRUD ---------------------------------------------
     // ------------------------------------------------------------------------------------------------
 
      public interface GetAllSitesListener{ public void onComplete(List<SiteAdvice> divingSiteAdvices); }
 
     // read many
-     public void getAllSitesListener(GetAllSitesListener listener){
-
+     public static void getAllAdvices(final Model.OnGetAdvicesComplete listener){
+         getFBStore().collection(advicesCollection).get().addOnCompleteListener((@NonNull Task<QuerySnapshot> task)
+                 -> {
+             if (task.isSuccessful()){
+                 List<SiteAdvice> list = new LinkedList<>();
+                 for (QueryDocumentSnapshot document : task.getResult()){
+                     list.add(SiteAdvice.fromMap(document.getData()));
+                 }
+                 listener.onComplete(new MutableLiveData<>(list));
+             }
+         });
      }
 
      // post one
-     public void saveSiteAdvice(SiteAdvice divindSiteAdvice){
-//         FirebaseFirestore db = getFBStore();
-//         divindSiteAdvice.setOwner(getFBUser().getEmail());
-//         db.collection(advicesCollection).document(divindSiteAdvice.getId())
-//                 .set(album.toJson())
-//                 .addOnSuccessListener((v) ->{
-//                     listener.onComplete(true);
-//                     Log.d("ALBUM", "saveAlbum success");
-//                 })
-//                 .addOnFailureListener((e) ->{
-//                     listener.onComplete(false);
-//                     Log.d("ALBUM", "saveAlbum failed");
-//                 });
+     public static void saveAdvice(SiteAdvice divindSiteAdvice, Model.OnCompleteListener listener){
+         FirebaseFirestore db = getFBStore();
+         divindSiteAdvice.setOwner(getFBUser().getEmail());
+         db.collection(advicesCollection).document(divindSiteAdvice.getId())
+                 .set(divindSiteAdvice.jsonify())
+                 .addOnSuccessListener((v) ->{
+                     listener.onComplete(true);
+                     Log.d("ALBUM", "saveAlbum success");
+                 })
+                 .addOnFailureListener((e) ->{
+                     listener.onComplete(false);
+                     Log.d("ALBUM", "saveAlbum failed");
+                 });
+
      }
 
     public static void uploadImage(Bitmap bmImg, String name, Model.UploadImageListener listener) {
@@ -125,19 +138,19 @@ public class ModelFirebase {
      // ---------------------             Assistance Functions             ------------------------------
      // ------------------------------------------------------------------------------------------------
 
-    private static FirebaseAuth getFBAuth(){
+    public static FirebaseAuth getFBAuth(){
         return FirebaseAuth.getInstance();
     }
 
-    private static FirebaseUser getFBUser(){
+    public static FirebaseUser getFBUser(){
         return getFBAuth().getCurrentUser();
     }
 
-    private static FirebaseFirestore getFBStore() {
+    public static FirebaseFirestore getFBStore() {
         return FirebaseFirestore.getInstance();
     }
 
-    private static FirebaseStorage getFBStorage() {
+    public static FirebaseStorage getFBStorage() {
         return FirebaseStorage.getInstance();
     }
 
